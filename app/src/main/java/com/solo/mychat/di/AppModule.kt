@@ -3,8 +3,9 @@ package com.solo.mychat.di
 import android.content.Context
 import androidx.room.Room
 import com.solo.mychat.BuildConfig
+import com.solo.mychat.data.local.db.AppDatabase
+import com.solo.mychat.data.local.db.ChatDao
 import com.solo.mychat.data.local.db.GoalsDao
-import com.solo.mychat.data.local.db.GoalsDatabase
 import com.solo.mychat.data.remote.api.ApiService
 import com.solo.mychat.data.remote.interceptors.MyInterceptor
 import com.solo.mychat.data.repository.ChatRepositoryImpl
@@ -57,23 +58,32 @@ class AppModule {
 
     @Provides
     fun provideChatRepository(
-        apiService: ApiService
-    ): ChatRepository = ChatRepositoryImpl(apiService)
+        apiService: ApiService,
+        chatDao: ChatDao
+    ): ChatRepository = ChatRepositoryImpl(
+        apiService,
+        chatDao
+    )
 
     @Singleton
     @Provides
-    fun provideGoalsDatabase(@ApplicationContext context: Context): GoalsDatabase =
+    fun provideGoalsDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(
             context = context,
-            klass = GoalsDatabase::class.java,
+            klass = AppDatabase::class.java,
             name = "goals_db"
         ).fallbackToDestructiveMigration()
             .build()
 
     @Singleton
     @Provides
-    fun provideGoalsDao(goalsDatabase: GoalsDatabase): GoalsDao =
-        goalsDatabase.goalsDao()
+    fun provideGoalsDao(appDatabase: AppDatabase): GoalsDao =
+        appDatabase.goalsDao()
+
+    @Singleton
+    @Provides
+    fun provideChatDao(appDatabase: AppDatabase): ChatDao =
+        appDatabase.chatDao()
 
     @Provides
     fun provideGoalRepository(

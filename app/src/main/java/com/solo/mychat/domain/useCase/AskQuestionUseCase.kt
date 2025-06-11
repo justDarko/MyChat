@@ -7,9 +7,9 @@ import javax.inject.Inject
 
 class AskQuestionUseCase @Inject constructor(
     private val chatRepository: ChatRepository
-) : BaseUseCase<AskQuestionUseCase.Params, String>() {
+) : BaseUseCase<AskQuestionUseCase.Params, Boolean>() {
 
-    override suspend operator fun invoke(params: Params): CustomResult<String> {
+    override suspend operator fun invoke(params: Params): CustomResult<Boolean> {
         return chatRepository.askQuestion(requestBody = params.requestBody)
     }
 
