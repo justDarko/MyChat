@@ -2,13 +2,16 @@ package com.solo.mychat
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -56,11 +59,11 @@ class MainActivity : ComponentActivity() {
                         selectedIcon = Icons.Filled.Email,
                         unselectedIcon = Icons.Outlined.Email
                     ),
-//                    BottomNavigationItems(
-//                        title = "Settings",
-//                        selectedIcon = Icons.Filled.Settings,
-//                        unselectedIcon = Icons.Outlined.Settings
-//                    )
+                    BottomNavigationItems(
+                        title = "Stats",
+                        selectedIcon = Icons.Filled.DateRange,
+                        unselectedIcon = Icons.Outlined.DateRange
+                    )
                 )
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -78,7 +81,7 @@ class MainActivity : ComponentActivity() {
                             val title = when (selectedIndex) {
                                 0 -> "My goals"
                                 1 -> "My chat"
-                                2 -> "Settings"
+                                2 -> "My stats"
                                 else -> ""
                             }
                             TopAppBar(
@@ -102,9 +105,9 @@ class MainActivity : ComponentActivity() {
                                         onClick = {
                                             navController.navigate(item.title) {
                                                 launchSingleTop = true
-                                                restoreState = true
+//                                                restoreState = false
                                                 popUpTo(navController.graph.startDestinationId) {
-                                                    saveState = true
+                                                    inclusive = true
                                                 }
                                             }
                                             selectedIndex = index
@@ -124,6 +127,20 @@ class MainActivity : ComponentActivity() {
                         AppNavigator(
                             navController,
                             modifier = Modifier.padding(it)
+                        )
+                        BackHandler(
+                            onBack = {
+                                if (navController.currentDestination?.route == "Goal") {
+                                    finish()
+                                } else {
+                                    navController.navigate("Goal") {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            inclusive = true
+                                        }
+                                        launchSingleTop = true
+                                    }
+                                }
+                            }
                         )
                     }
                 }
