@@ -9,8 +9,8 @@ to ask every kind of questions, primarily goals related.
 1. What user sees on the home screen is the title of that screen and list of all goals that he set.
 User has an option to delete a goal, complete it and set it incomplete. At the bottom, user has an floating action button
 which allows him to add new goal.
-2. Second screen is dedicated for a chat with an LLM. For that purpose, pretrained model is used from [https://rapidapi.com](url).
-Instructions on how to use it can be found on the following link: [https://rapidapi.com/rphrp1985/api/chatgpt-42](url).
+2. Second screen is dedicated for a chat with an LLM. For that purpose, pretrained model is used from [https://rapidapi.com](https://rapidapi.com/).
+Instructions on how to use it can be found on the following link: [https://rapidapi.com/rphrp1985/api/chatgpt-42](https://rapidapi.com/rphrp1985/api/chatgpt-42).
 3. Third screen is called "Stats" and its purpose is to show visually the statistics of user's achieved goals.
 
 # Technical
