@@ -9,8 +9,9 @@ class CompleteGoalUseCase @Inject constructor(
 ) : BaseUseCaseNoResult<CompleteGoalUseCase.Params>() {
 
     override suspend operator fun invoke(params: Params) {
+        val achieved = params.goal.achieved
         val goal = params.goal.copy(
-            achieved = true
+            achieved = !achieved
         )
         return goalsRepository.completeGoal(
             goal = goal

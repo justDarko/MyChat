@@ -59,7 +59,7 @@ class GoalsViewModel @Inject constructor(
     private fun getGoalsList() {
         viewModelScope.launch(Dispatchers.IO) {
             getAllGoalsUseCase.invoke().collectLatest { goalsList ->
-                Timber.d("The goasl are: ${goalsList}")
+                Timber.d("The goasl are: $goalsList")
                 _state.update {
                     it.copy(
                         listOfGoals = goalsList
